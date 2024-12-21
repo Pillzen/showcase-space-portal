@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { ProjectGrid } from "@/components/ProjectGrid";
-import { Button } from "@/components/ui/button";
 import { Project } from "@/types/project";
-import { PlusCircle } from "lucide-react";
+import { AddProjectDialog } from "@/components/AddProjectDialog";
 
 // Sample data for initial display
 const sampleProjects: Project[] = [
@@ -35,16 +34,18 @@ const Index = () => {
 
   console.log("Rendering Index page with projects:", projects);
 
+  const handleAddProject = (newProject: Project) => {
+    console.log("Adding new project:", newProject);
+    setProjects((prev) => [...prev, newProject]);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-card shadow-md">
         <div className="container mx-auto px-4 py-6">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-primary">ProjectShowcase</h1>
-            <Button className="bg-primary hover:bg-primary-hover text-white">
-              <PlusCircle className="w-5 h-5 mr-2" />
-              Add Project
-            </Button>
+            <AddProjectDialog onProjectAdd={handleAddProject} />
           </div>
         </div>
       </header>
