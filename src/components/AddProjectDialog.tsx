@@ -6,6 +6,7 @@ import { Label } from "./ui/label";
 import { PlusCircle } from "lucide-react";
 import { Project, ProjectType } from "@/types/project";
 import { useToast } from "./ui/use-toast";
+import { motion } from "framer-motion";
 
 interface AddProjectDialogProps {
   onProjectAdd: (project: Project) => void;
@@ -41,7 +42,7 @@ export const AddProjectDialog = ({ onProjectAdd }: AddProjectDialogProps) => {
       url,
       tags: tags.split(",").map((tag) => tag.trim()),
       createdAt: new Date().toISOString(),
-      userId: "1", // Placeholder until we implement authentication
+      userId: "1",
     };
 
     onProjectAdd(newProject);
@@ -65,43 +66,49 @@ export const AddProjectDialog = ({ onProjectAdd }: AddProjectDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="bg-primary hover:bg-primary-hover text-white">
-          <PlusCircle className="w-5 h-5 mr-2" />
-          Add Project
-        </Button>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Button className="bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] hover:from-[#7C3AED] hover:to-[#C026D3] text-white shadow-lg">
+            <PlusCircle className="w-5 h-5 mr-2" />
+            Add Project
+          </Button>
+        </motion.div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="bg-[#1A1F2C] border border-[#8B5CF6]/20 backdrop-blur-xl text-white">
         <DialogHeader>
-          <DialogTitle>Add New Project</DialogTitle>
+          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] text-transparent bg-clip-text">
+            Add New Project
+          </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
+            <Label htmlFor="title" className="text-gray-300">Title</Label>
             <Input
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Project title"
               required
+              className="bg-[#403E43]/30 border-[#8B5CF6]/20 text-white placeholder:text-gray-500"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="description">Description</Label>
+            <Label htmlFor="description" className="text-gray-300">Description</Label>
             <Input
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Project description"
               required
+              className="bg-[#403E43]/30 border-[#8B5CF6]/20 text-white placeholder:text-gray-500"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="type">Type</Label>
+            <Label htmlFor="type" className="text-gray-300">Type</Label>
             <select
               id="type"
               value={type}
               onChange={(e) => setType(e.target.value as ProjectType)}
-              className="w-full rounded-md border border-input bg-background px-3 py-2"
+              className="w-full rounded-md border border-[#8B5CF6]/20 bg-[#403E43]/30 px-3 py-2 text-white"
             >
               <option value="website">Website</option>
               <option value="figma">Figma</option>
@@ -109,25 +116,30 @@ export const AddProjectDialog = ({ onProjectAdd }: AddProjectDialogProps) => {
             </select>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="url">URL</Label>
+            <Label htmlFor="url" className="text-gray-300">URL</Label>
             <Input
               id="url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="Project URL"
               required
+              className="bg-[#403E43]/30 border-[#8B5CF6]/20 text-white placeholder:text-gray-500"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="tags">Tags (comma-separated)</Label>
+            <Label htmlFor="tags" className="text-gray-300">Tags (comma-separated)</Label>
             <Input
               id="tags"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
               placeholder="React, TypeScript, UI/UX"
+              className="bg-[#403E43]/30 border-[#8B5CF6]/20 text-white placeholder:text-gray-500"
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button
+            type="submit"
+            className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#D946EF] hover:from-[#7C3AED] hover:to-[#C026D3] text-white"
+          >
             Add Project
           </Button>
         </form>
